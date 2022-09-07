@@ -34,7 +34,7 @@ struct cache_t {
     using lstIt = typename std::list<setNode_t<T, freqNode_t<T>>>::iterator;
     std::unordered_map<KeyT, lstIt> hashTbl;
 
-    cache_t(size_t capacity) : cpty(capacity) {}; // ctor
+    cache_t(size_t capacity, size_t sz) : cpty(capacity), size(sz) {}; // ctor
 
     int insert(KeyT key) {
         auto elem = hashTbl.find(key);
@@ -46,12 +46,12 @@ struct cache_t {
 
         if (size > cpty) {
             freqNode_t<int> lessFreq = freqLst.front();
-            auto node = lessFreq.lst.begin();
+            auto node = lessFreq.lst.begin();  // !!!
             int key = node->key;
 
             auto elem = hashTbl.find(key);
             hashTbl.erase(elem);
-            lessFreq.lst.pop_front();
+            lessFreq.lst.pop_front(); // !!!
 
             if (!lessFreq.lst.size()) 
                 freqLst.pop_front();
@@ -61,12 +61,12 @@ struct cache_t {
 
         auto lessFreq = freqLst.begin();
         if (lessFreq->freq != 1) {
-            freqNode_t<int> newNode(1); //???
+            freqNode_t<int> newNode(1);
             freqLst.push_front(newNode);
         }
 
         std::list<freqNode_t<int>>::iterator node = freqLst.begin();
-        setNode_t<int, freqNode_t<int>> newNode(key, key, node);    //???
+        setNode_t<int, freqNode_t<int>> newNode(key, key, node);    
 
         node->lst.push_front(newNode);
         auto newNodeIt = node->lst.begin();
@@ -83,7 +83,7 @@ struct cache_t {
         auto freqNext = std::next(freq, 1);
 
         if ((freqNext == freqLst.end()) || (freq->freq != (freqNext->freq + 1))) {
-            freqNode_t<int> newNode(freq->freq + 1);    //???
+            freqNode_t<int> newNode(freq->freq + 1);    
             freqLst.insert(freqNext, newNode);
         }
 
@@ -93,10 +93,12 @@ struct cache_t {
         if (!freq->lst.size()) 
             freqLst.erase(freq);
 
-        setNode_t<int, freqNode_t<int>> newNode(key, key, freqNext);    //???
+        setNode_t<int, freqNode_t<int>> newNode(key, key, freqNext);    
 
         freqNext->lst.push_front(newNode);
 
         return 0;
     }
 };
+
+
