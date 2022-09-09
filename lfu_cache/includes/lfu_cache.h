@@ -10,9 +10,11 @@ template <typename T, typename FreqNode, typename KeyT = int>
 struct setNode_t {
     T data;
     KeyT key;
-    int freq;
 
-    setNode_t(T d, KeyT k, int fr) : data(d), key(k), freq(fr) {};
+    using freqNodeIt = typename std::list<FreqNode>::iterator;
+    freqNodeIt freqNode;
+
+    setNode_t(T d, KeyT k, freqNodeIt iter) : data(d), key(k), freqNode(iter) {};  //ctor
 };
 
 template <typename T, typename KeyT = int>
@@ -20,7 +22,7 @@ struct freqNode_t {
     int freq;
     std::list<setNode_t<T, freqNode_t<T>>> lst;
 
-    freqNode_t(int fr) : freq(fr) {};
+    freqNode_t(int fr) : freq(fr) {};   //ctor
 };
 
 template <typename T, typename KeyT = int>
@@ -63,7 +65,7 @@ struct cache_t {
         }
 
         std::list<freqNode_t<int>>::iterator freqNode = freqLst.begin();
-        setNode_t<int, freqNode_t<int>> newNode(key, key, 1);    
+        setNode_t<int, freqNode_t<int>> newNode(key, key, freqNode);    
 
         freqNode->lst.push_front(newNode);
         auto newNodeIt = freqNode->lst.begin();
@@ -77,14 +79,7 @@ struct cache_t {
         auto hashElem = hashTbl.find(key);
         auto setElem = hashElem->second;
 
-        auto freq = setElem->freq;
-        auto freqElem = freqLst.begin();
-        for (auto iter = freqLst.begin(); iter != freqLst.end(); iter++) 
-            if (freq == iter->freq) {
-                freqElem = iter;
-                break;
-            }
-        
+        auto freqElem = setElem->freqNode;
         auto freqNext = std::next(freqElem, 1);
 
         if ((freqNext == freqLst.end()) || ((freqElem->freq + 1) != freqNext->freq)) {
@@ -92,15 +87,19 @@ struct cache_t {
             freqLst.insert(freqNext, newNode);
         }
 
+        
         freqElem->lst.erase(setElem);
+        hashTbl.erase(hashElem);
         freqNext = std::next(freqElem, 1);
 
         if (!freqElem->lst.size()) 
             freqLst.erase(freqElem);
 
-        setNode_t<int, freqNode_t<int>> newNode(key, key, freqNext->freq);    
+        setNode_t<int, freqNode_t<int>> newNode(key, key, freqNext);    
 
         freqNext->lst.push_front(newNode);
+        auto newHashElem = freqNext->lst.begin();
+        hashTbl.insert({key, newHashElem});
 
         return 0;
     }
