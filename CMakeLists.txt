@@ -1,37 +1,14 @@
 cmake_minimum_required (VERSION 3.16)
-project(lfu)
+project(comporator)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set (CMAKE_BUILD_TYPE Debug)
 
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG release-1.12.1
-)
-
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-
-#main
-set (SOURCES sources/main.cpp)
+set (SOURCES comporator.cpp lfu_cache/sources/lfu_cache.cpp ideal_cache/sources/ideal_cache.cpp common/common.cpp)
 
 add_executable (${PROJECT_NAME} ${SOURCES})
-target_include_directories (${PROJECT_NAME} PRIVATE includes)
+target_include_directories (${PROJECT_NAME} PRIVATE lfu_cache/includes ideal_cache/includes common)
 
 add_compile_options (-g -Werror -Wall -Wextra -Wpedantic)
-
-#tests
-enable_testing()
-
-set (TEST_SOURCES test/lfu_unit_test.cpp test/testedFunc.cpp)
-
-add_executable(lfu_unit_test ${TEST_SOURCES})
-target_include_directories (lfu_unit_test PRIVATE includes)
-target_link_libraries(lfu_unit_test GTest::gtest_main)
-
-include(GoogleTest)
-gtest_discover_tests(lfu_unit_test)

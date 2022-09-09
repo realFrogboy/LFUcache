@@ -36,22 +36,21 @@ struct cache_t {
 
     cache_t(size_t capacity, size_t sz) : cpty(capacity), size(sz) {}; // ctor
 
-    int insert(KeyT key) {
+    int insert(const KeyT key) {
         auto elem = hashTbl.find(key);
 
-        if (elem != hashTbl.end()) 
+        if (elem != hashTbl.end())      // key founded in cache
             return 1;
-
+                                        // key not founded
         size++;
-
         if (size > cpty) {
             freqNode_t<int> lessFreq = freqLst.front();
-            auto node = lessFreq.lst.begin();  // !!!
+            auto node = lessFreq.lst.begin(); 
             int key = node->key;
 
             auto elem = hashTbl.find(key);
             hashTbl.erase(elem);
-            lessFreq.lst.pop_front(); // !!!
+            lessFreq.lst.pop_front();
 
             if (!lessFreq.lst.size()) 
                 freqLst.pop_front();
@@ -76,7 +75,7 @@ struct cache_t {
         return 0;
     }
 
-    int access(KeyT key) {
+    int access(const KeyT key) {
         auto elem = hashTbl.find(key);
 
         auto freq = elem->second->freqNode;

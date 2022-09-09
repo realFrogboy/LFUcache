@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdio.h>
 #include <assert.h>
 #include <limits.h>
@@ -30,7 +32,7 @@ struct idealCache_t {
             for (auto iter = hashTbl.begin(); iter != hashTbl.end(); iter++)
                 if (iter->second > max) {
                     max = iter->second;
-                    maxIter = iter;     // ???
+                    maxIter = iter;
                 }
             hashTbl.erase(maxIter);
             size--;
