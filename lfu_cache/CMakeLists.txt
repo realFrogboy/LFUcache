@@ -4,6 +4,8 @@ project(lfu)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set (CMAKE_BUILD_TYPE Debug)
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -20,7 +22,7 @@ set (SOURCES sources/main.cpp sources/lfu_cache.cpp ../common/common.cpp)
 add_executable (${PROJECT_NAME} ${SOURCES})
 target_include_directories (${PROJECT_NAME} PRIVATE includes ../common)
 
-add_compile_options (-Werror -Wall -Wextra -Wpedantic)
+add_compile_options (-ggdb3 -Werror -Wall -Wextra -Wpedantic)
 
 #tests
 enable_testing()
