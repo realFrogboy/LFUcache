@@ -1,7 +1,7 @@
 #include "common.h"
 
 int *getData(size_t &n, size_t &cacheSz) {
-    int tmp = scanf("%lu %lu", &n, &cacheSz);
+    int tmp = scanf("%lu %lu", &cacheSz, &n);
     assert(tmp == 2);
 
     int *arr = new int[n];
