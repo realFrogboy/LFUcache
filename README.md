@@ -20,11 +20,9 @@ If we knew the requests in advance, then if we needed to delete an element from 
 
 
 ## Build
+1. Then go to the "LFUcache" directory:
 
-### LFU
-1. Then go to the "LFUcache\lfu_cache" directory:
-
-        cd LFUcache\lfu_cache
+        cd LFUcache
 
 2. Create a new folder "build" and go to it:
 
@@ -38,25 +36,12 @@ If we knew the requests in advance, then if we needed to delete an element from 
 
 4. The program in the file called "lfu".
 
-### Ideal cache          
-1. Then go to the "LFUcache\ideal_cache" directory.
-2. Create a new folder "build" and go to it.
-3. Run CMake.
-4. The program in the file called "ideal_cache".
-
-### Comporator
-1. Then go to the "LFUcache" directory.
-2. Create a new folder "build" and go to it.
-3. Run CMake.
-4. The program in the file called "comporator".
-
 ## Tests
 To run the test you should:
 1. Go to folder "build".
 2. Run CTest:
 
-        ctest
+        ./lfu_unit_test
+        ./ideal_cache_unit_test
 
 The tests are done using Google Test.
-
-
