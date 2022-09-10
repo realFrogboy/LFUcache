@@ -1,2 +1,4 @@
 lfu_cache/build
 ideal_cache/build
+build
+.vscode
