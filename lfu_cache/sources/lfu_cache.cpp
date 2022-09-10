@@ -1,8 +1,6 @@
 #include "lfu_cache.h"
 
-int lfuCache(const size_t n, const size_t cacheSz, const int *arr) {
-    assert(arr);
-
+int lfuCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr) {
     cache_t<int> cache(cacheSz, 0);
 
     int hits = 0;

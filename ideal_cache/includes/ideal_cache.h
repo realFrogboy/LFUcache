@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <limits.h>
 #include <unordered_map>
+#include <vector>
 
 template <typename KeyT = int>
 struct distance {
@@ -43,17 +44,17 @@ struct idealCache_t {
     }
 
 
-    int decDist(const distance<KeyT> *arr) {
+    int decDist(std::vector<distance<KeyT>> arr) {
         for (auto iter = hashTbl.begin(); iter != hashTbl.end(); iter++) {
             iter->second--;
             if (iter->second == 0) 
-                iter->second = arr->dist;
+                iter->second = arr[iter->first].dist;
         }
         return 0;
     }
 };
 
-int idealCache(const size_t n, const size_t cacheSz, const int *arr);
+int idealCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr);
 
 template <typename KeyT = int>
-int fillDist(distance<KeyT> *dist, const int *arr, const size_t n);
+int fillDist(std::vector<distance<KeyT>>& dist, const std::vector<int>& arr, const size_t n);

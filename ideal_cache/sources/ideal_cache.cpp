@@ -1,10 +1,7 @@
 #include "ideal_cache.h"
 
-int idealCache(const size_t n, const size_t cacheSz, const int *arr) {
-    assert(arr);
-
-    distance<int> *dist = new distance<int>[n];
-    assert(dist);
+int idealCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr) {
+    std::vector<distance<int>> dist(n);
 
     fillDist(dist, arr, n);
 
@@ -18,15 +15,11 @@ int idealCache(const size_t n, const size_t cacheSz, const int *arr) {
         if (ver)
             hits++;
     }
-    delete [] dist;
     return hits;
 }
 
 template <typename KeyT = int>
-int fillDist(distance<KeyT> *dist, const int *arr, const size_t n) {
-    assert(dist);
-    assert(arr);
-
+int fillDist(std::vector<distance<KeyT>>& dist, const std::vector<int>& arr, const size_t n) {
     std::unordered_map<KeyT, int> hashTbl;
 
     for (unsigned idx = 0; idx < n; idx++) {

@@ -2,5 +2,8 @@
 
 #include <stdio.h>
 #include <assert.h>
+#include <vector>
+#include <algorithm>
+#include <iostream>
 
-int *getData(size_t &n, size_t &cacheSz);
+std::vector<int> getData(size_t &n, size_t &cacheSz);

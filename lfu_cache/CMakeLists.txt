@@ -4,16 +4,6 @@ project(lfu)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG release-1.12.1
-)
-
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-
 #main
 set (SOURCES sources/main.cpp sources/lfu_cache.cpp ../common/common.cpp)
 
@@ -24,12 +14,13 @@ add_compile_options (-Werror -Wall -Wextra -Wpedantic)
 
 #tests
 enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
 
+set (TARGET lfu_unit_test)
 set (TEST_SOURCES test/lfu_unit_test.cpp sources/lfu_cache.cpp)
 
-add_executable(lfu_unit_test ${TEST_SOURCES})
-target_include_directories (lfu_unit_test PRIVATE includes)
-target_link_libraries(lfu_unit_test GTest::gtest_main)
+add_executable(${TARGET} ${TEST_SOURCES})
 
-include(GoogleTest)
-gtest_discover_tests(lfu_unit_test)
+target_include_directories (${TARGET} PRIVATE includes)
+target_link_libraries (${TARGET} ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES} pthread)

@@ -5,6 +5,7 @@
 #include <list>
 #include <unordered_map>
 #include <iterator>
+#include <vector>
 
 template <typename T, typename FreqNode, typename KeyT = int>
 struct setNode_t {
@@ -105,4 +106,4 @@ struct cache_t {
     }
 };
 
-int lfuCache(const size_t n, const size_t cacheSz, const int *arr);
+int lfuCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr);

@@ -9,4 +9,7 @@ set (SOURCES comporator.cpp lfu_cache/sources/lfu_cache.cpp ideal_cache/sources/
 add_executable (${PROJECT_NAME} ${SOURCES})
 target_include_directories (${PROJECT_NAME} PRIVATE lfu_cache/includes ideal_cache/includes common)
 
+add_subdirectory (lfu_cache)
+add_subdirectory (ideal_cache)
+
 add_compile_options (-Werror -Wall -Wextra -Wpedantic)
