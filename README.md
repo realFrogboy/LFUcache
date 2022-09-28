@@ -9,8 +9,8 @@ More information about implementation is on the [website](http://dhruvbird.com/l
 
 ### Ideal cache
 If we knew the requests in advance, then if we needed to delete an element from the cache, we would choose the one that would be encountered later than other elements. Such an algorithm cann't be implemented in real life, but in the conditions of this task, we know in advance which requests will come, so we can use this:
-1. Specify the distance to the next similar element for each request using a hash table. Asymptotic complexity O(n).
-2. When deleting an element, you just need to look through all the cache elements and knowing the distance, delete the element that will occur later than the rest of the elements. Asymptotic complexity O(k), k - number of elements in cache.
+1. Specify the index to the next similar element for each request using a hash table. Asymptotic complexity O(n).
+2. Cache items are stored in std::multimap, so you can get the elem to delete for O(1) and insert a new element into the cache for O(lgn).
 
 ## Installation
 1. Make sure that CMake and git is installed on your computer.
