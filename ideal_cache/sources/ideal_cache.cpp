@@ -9,7 +9,6 @@ int idealCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr
 
     int hits = 0;
     for (unsigned idx = 0; idx < n; idx++) {
-        cache.decDist(dist);
         int ver = cache.insert(dist[idx]);
 
         if (ver)
@@ -24,15 +23,14 @@ int fillDist(std::vector<distance<KeyT>>& dist, const std::vector<int>& arr, con
 
     for (unsigned idx = 0; idx < n; idx++) {
         dist[idx].key  = arr[idx];
-        dist[idx].dist = n - idx - 1;
+        dist[idx].dist = INT_MAX;
 
         auto hashElem = hashTbl.find(arr[idx]);
         if (hashElem == hashTbl.end())  // key not founded in cache
             hashTbl.insert({arr[idx], idx});
         else {                          // key founded in cache
             int prevIdx = hashElem->second;
-            int distance = idx - prevIdx;
-            dist[prevIdx].dist = distance;
+            dist[prevIdx].dist = idx;
             hashElem->second = idx;
         }
     }

@@ -5,6 +5,7 @@
 #include <limits.h>
 #include <unordered_map>
 #include <vector>
+#include <map>
 
 template <typename KeyT = int>
 struct distance {
@@ -16,40 +17,37 @@ template <typename KeyT = int>
 struct idealCache_t {
     size_t capacity;
     size_t size;
-    std::unordered_map<KeyT, int> hashTbl;
+    std::multimap<int, KeyT> cacheElems;
+    using mapIt = typename std::multimap<int, KeyT>::iterator;
+
+    std::unordered_map<KeyT, mapIt> hashTbl;
 
     idealCache_t(size_t cpty, size_t sz) : capacity(cpty), size(sz) {};    //ctor
 
     int insert(const distance<KeyT> elem) {
         auto hashElem = hashTbl.find(elem.key);
-        if (hashElem != hashTbl.end())    //  key founded
+        if (hashElem != hashTbl.end()) {  //  key founded
+            cacheElems.erase(hashElem->second);
+            hashTbl.erase(hashElem);
+            auto iter = cacheElems.insert({elem.dist, elem.key});
+            hashTbl.insert({elem.key, iter});
             return 1;
+        }
 
 // key not founded
         size++;
         if (size > capacity) {
-            int max = 0;
-            auto maxIter = hashTbl.begin();
-            for (auto iter = hashTbl.begin(); iter != hashTbl.end(); iter++)
-                if (iter->second > max) {
-                    max = iter->second;
-                    maxIter = iter;
-                }
-            hashTbl.erase(maxIter);
+            auto maxIter = std::prev(cacheElems.end());
+            auto deletedKey = maxIter->second;
+            cacheElems.erase(maxIter);
+            auto deletedIter = hashTbl.find(deletedKey);
+            hashTbl.erase(deletedIter);
             size--;
         }
 
-        hashTbl.insert({elem.key, elem.dist});
-        return 0;
-    }
 
-
-    int decDist(std::vector<distance<KeyT>> arr) {
-        for (auto iter = hashTbl.begin(); iter != hashTbl.end(); iter++) {
-            iter->second--;
-            if (iter->second == 0) 
-                iter->second = arr[iter->first].dist;
-        }
+        auto iter = cacheElems.insert({elem.dist, elem.key});
+        hashTbl.insert({elem.key, iter});
         return 0;
     }
 };
