@@ -7,6 +7,8 @@
 #include <vector>
 #include <map>
 
+namespace ideal_cache {
+
 template <typename KeyT = int>
 struct distance {
     KeyT key;
@@ -56,3 +58,5 @@ int idealCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr
 
 template <typename KeyT = int>
 int fillDist(std::vector<distance<KeyT>>& dist, const std::vector<int>& arr, const size_t n);
+
+} // ideal_cache

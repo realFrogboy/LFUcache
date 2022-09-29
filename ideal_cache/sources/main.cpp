@@ -3,10 +3,10 @@
 
 int main() {
     size_t n = 0, cacheSz = 0;
-    std::vector<int> arr = getData(n, cacheSz);
+    std::vector<int> arr = common::getData(n, cacheSz);
 
-    int res = idealCache(n, cacheSz, arr);
+    int res = ideal_cache::idealCache(n, cacheSz, arr);
 
-    printf("%d\n", res);
+    std::cout << res << '\n';
     return 0;
 }

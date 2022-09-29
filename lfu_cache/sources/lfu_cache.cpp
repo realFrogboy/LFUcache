@@ -1,5 +1,7 @@
 #include "lfu_cache.h"
 
+namespace lfu_cache {
+
 int lfuCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr) {
     cache_t<int> cache(cacheSz, 0);
 
@@ -16,3 +18,5 @@ int lfuCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr) 
     }
     return hits;
 }
+
+} // lfu_cache

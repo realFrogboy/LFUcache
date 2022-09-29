@@ -1,5 +1,7 @@
 #include "ideal_cache.h"
 
+namespace ideal_cache {
+
 int idealCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr) {
     std::vector<distance<int>> dist(n);
 
@@ -36,3 +38,5 @@ int fillDist(std::vector<distance<KeyT>>& dist, const std::vector<int>& arr, con
     }
     return 0;
 }
+
+} // ideal_cache

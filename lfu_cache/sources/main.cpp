@@ -3,10 +3,10 @@
 
 int main() {
     size_t n = 0, cacheSz = 0;
-    std::vector<int> arr = getData(n, cacheSz);
+    std::vector<int> arr = common::getData(n, cacheSz);
 
-    int res = lfuCache(n ,cacheSz, arr);
+    int res = lfu_cache::lfuCache(n ,cacheSz, arr);
 
-    printf("%d\n", res);
+    std::cout << res << '\n';
     return 0;
 }

@@ -1,8 +1,10 @@
 #include "common.h"
 
+namespace common {
+
 std::vector<int> getData(size_t &n, size_t &cacheSz) {
-    int tmp = scanf("%lu %lu", &cacheSz, &n);
-    assert(tmp == 2);
+    std::cin >> cacheSz >> n;
+    assert(std::cin.good());
 
     std::vector<int> arr(n);
 
@@ -12,3 +14,5 @@ std::vector<int> getData(size_t &n, size_t &cacheSz) {
     });
     return arr;
 }
+
+} // common

@@ -7,6 +7,8 @@
 #include <iterator>
 #include <vector>
 
+namespace lfu_cache {
+
 template <typename T, typename FreqNode, typename KeyT = int>
 struct setNode_t {
     T data;
@@ -107,3 +109,5 @@ struct cache_t {
 };
 
 int lfuCache(const size_t n, const size_t cacheSz, const std::vector<int>& arr);
+
+} // lfu_cache
