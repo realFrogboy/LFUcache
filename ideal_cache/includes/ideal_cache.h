@@ -18,11 +18,11 @@ struct distance {
 
 template <typename KeyT, typename D>
 struct idealCache_t {
-    size_t capacity;
-    size_t size;
-    std::multimap<int, D> cacheElems; // TODO: KeyT -> D
     using mapIt = typename std::multimap<int, D>::iterator;
 
+    size_t capacity;
+    size_t size;
+    std::multimap<int, D> cacheElems;
     std::unordered_map<KeyT, mapIt> hashTbl;
 
     idealCache_t(size_t cpty, size_t sz) : capacity(cpty), size(sz) {};
@@ -42,12 +42,17 @@ struct idealCache_t {
 // key not found
         size++;
         if (size > capacity) {
+            size--;
             auto maxIter = std::prev(cacheElems.end());
+
+            if (maxIter->first < elem.dist) {
+                return 0;
+            }     
+
             auto deletedKey = maxIter->second.getKey();
             cacheElems.erase(maxIter);
             auto deletedIter = hashTbl.find(deletedKey);
             hashTbl.erase(deletedIter);
-            size--;
         }
         
         costom_type::page_t page(elem.key);
