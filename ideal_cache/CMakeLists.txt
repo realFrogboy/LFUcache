@@ -5,10 +5,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #main
-set (SOURCES sources/main.cpp sources/ideal_cache.cpp ../common/common.cpp)
+set (SOURCES sources/main.cpp)
 
 add_executable (${PROJECT_NAME} ${SOURCES})
-target_include_directories (${PROJECT_NAME} PRIVATE includes ../common)
+target_include_directories (${PROJECT_NAME} PRIVATE includes ../common ../costom_type)
 
 add_compile_options (-Werror -Wall -Wextra -Wpedantic)
 
@@ -17,9 +17,9 @@ enable_testing()
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-set (TEST_SOURCES test/ideal_cache_unit_test.cpp sources/ideal_cache.cpp)
+set (TEST_SOURCES test/ideal_cache_unit_test.cpp)
 
 add_executable(ideal_cache_unit_test ${TEST_SOURCES})
 
-target_include_directories (ideal_cache_unit_test PRIVATE includes)
+target_include_directories (ideal_cache_unit_test PRIVATE includes ../costom_type)
 target_link_libraries(ideal_cache_unit_test ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES} pthread)
